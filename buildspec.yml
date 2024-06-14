@@ -5,12 +5,35 @@ phases:
     runtime-versions:
       python: 3.8
     commands:
+      - echo Installing dependencies...
       - pip install grpcio grpcio-tools
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+      - echo Pulling Docker images...
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-server:latest || true
+      - docker pull $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-client:latest || true
 
   build:
     commands:
-      - terraform init
-      - terraform apply -auto-approve
+      - echo Building the Docker images...
+      - docker build -t grpc-server ./server
+      - docker build -t grpc-client ./client
+      - echo Tagging the Docker images...
+      - docker tag grpc-server:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-server:latest
+      - docker tag grpc-client:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-client:latest
+
+  post_build:
+    commands:
+      - echo Pushing the Docker images to ECR...
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-server:latest
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/grpc-client:latest
+      - echo Applying Kubernetes manifests...
+      - kubectl apply -f server-deployment.yaml
+      - kubectl apply -f client-deployment.yaml
 
 artifacts:
   files:

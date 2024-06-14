@@ -68,6 +68,10 @@ terraform plan
 terraform apply
 ```
 
+## CI/CD
+
+Create a CodeBuild Project in the AWS console. Choose "Use a buildspec file" and make sure the filename is buildspec.yml. Manually start a build or set up triggers to automatically start builds based on events
+
 ## Deployment Guide
 
 After the infrastructure is set up, deploy the server and client applications to the EKS cluster. You can use the Kubernetes manifests to create the deployments and services for these applications:
