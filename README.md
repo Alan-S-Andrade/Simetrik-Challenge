@@ -39,7 +39,7 @@ python pyApps/client/client.py
 ## Terraform modules
 
 ## Architecture
-
+```lua
 +---------------------------------------------+
 |                     VPC                     |
 |                                             |
@@ -49,7 +49,7 @@ python pyApps/client/client.py
 | +-------------+   +---------------------+   |
 |                                             |
 +---------------------------------------------+
-
+```
 ## Configuration
 
 Create an S3 bucket for storing the Terraform state.
