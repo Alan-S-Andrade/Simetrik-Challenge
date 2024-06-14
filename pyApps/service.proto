@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package example;
+
+service SimetrikService {
+  rpc Add (MathRequest) returns (MathResponse);
+  rpc Subtract (MathRequest) returns (MathResponse);
+  rpc Multiply (MathRequest) returns (MathResponse);
+}
+
+message MathRequest {
+  double num1 = 1;
+  double num2 = 2;
+}
+
+message MathResponse {
+  double result = 1;
+}
