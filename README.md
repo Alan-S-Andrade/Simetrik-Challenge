@@ -10,8 +10,9 @@ The server handles three different RPC methods: Add, Subtract, and Multiply. The
 
 ## Installation
 
-First install terraform and the Kubernetes CLI:
+First install terraform, docker, and the Kubernetes CLI:
 https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-cli,
+https://docs.docker.com/engine/install/ubuntu/,
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
 Then add your AWS credentials:
