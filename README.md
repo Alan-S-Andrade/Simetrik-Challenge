@@ -70,7 +70,7 @@ terraform apply
 
 ## CI/CD
 
-Create a CodeBuild Project in the AWS console. Choose "Use a buildspec file" and make sure the filename is buildspec.yml. Manually start a build or set up triggers to automatically start builds based on events
+Create a CodeBuild Project in the AWS console. Choose "Use a buildspec file" and make sure the filename is buildspec.yml. Set AWs account id and default region in CodeBuild project. Manually start a build or set up triggers to automatically start builds based on events
 
 ## Deployment Guide
 
